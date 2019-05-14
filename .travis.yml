@@ -1,0 +1,14 @@
+language: node_js
+
+node_js: 10.15.3
+
+install:
+    - npm ci
+
+script:
+    - npm test
+
+after_success:
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin
+    - docker build -t naanace/cicd:${TRAVIS_COMMIT::7} .
+    - docker push naanace/cicd:${TRAVIS_COMMIT::7}
