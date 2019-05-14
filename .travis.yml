@@ -9,6 +9,6 @@ script:
     - npm test
 
 after_success:
-    - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin
     - docker build -t naanace/cicd:${TRAVIS_COMMIT::7} .
     - docker push naanace/cicd:${TRAVIS_COMMIT::7}
