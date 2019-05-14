@@ -8,3 +8,7 @@ install:
 script:
     - npm test
 
+after_success:
+    - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+    - docker build -t naanace/cicd:${TRAVIS_COMMIT::7} .
+    - docker push naanace/cicd:${TRAVIS_COMMIT::7}
